@@ -8,6 +8,7 @@ import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
 import io.taraxacum.finaltech.core.item.machine.clicker.AreaAccessor;
 import io.taraxacum.finaltech.util.LocationUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import io.taraxacum.libs.slimefun.util.SfItemUtil;
@@ -150,7 +151,7 @@ public class AreaAccessorMenu extends AbstractClickerMenu {
                             String.valueOf(l.getBlockX() - location.getBlockX()),
                             String.valueOf(l.getBlockY() - location.getBlockY()),
                             String.valueOf(l.getBlockZ() - location.getBlockZ())));
-                    chestMenu.addItem(TEMP_CONTENT[i], icon);
+                    chestMenu.addItem(TEMP_CONTENT[i], ItemStackUtil.cleanItem(icon));
                     chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
                         // BlockMenu may be updated after the menu generated.
                         if (BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
