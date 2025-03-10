@@ -35,6 +35,7 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem, ValidI
     private final String itemLoreWithoutColor = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
     private final String itemLore = TextUtil.colorPseudorandomString(itemLoreWithoutColor, FinalTechChanged.getSeed());
     private final Material type = getItem().getType();
+    private final String name = getItemName();
 
     public CopyCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -65,6 +66,10 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem, ValidI
             PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
             String itemString = persistentDataContainer.get(ITEM_KEY, PersistentDataType.STRING);
             if (itemString == null) {
+                return false;
+            }
+
+            if (!itemString.equals(ItemStackUtil.getItemName(itemStack))) {
                 return false;
             }
         }
