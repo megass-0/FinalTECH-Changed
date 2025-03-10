@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTechChanged;
 import io.taraxacum.finaltech.FinalTechChanged;
+import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -69,7 +70,11 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem, ValidI
                 return false;
             }
 
-            if (!itemString.equals(ItemStackUtil.getItemName(itemStack))) {
+            if (!name.equals(ItemStackUtil.getItemName(itemStack))) {
+                return false;
+            }
+
+            if (!NullEnchantment.isPure(itemStack)) {
                 return false;
             }
         }
