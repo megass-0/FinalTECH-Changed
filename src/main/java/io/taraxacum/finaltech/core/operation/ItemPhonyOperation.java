@@ -7,7 +7,9 @@ import io.taraxacum.finaltech.FinalTechChanged;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.plugin.util.StringItemUtil;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,7 +65,9 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
 
         if (this.itemTypeCount <= this.itemTypeDifficulty) {
             boolean newType = true;
-            ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(itemStack);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            ItemStack stringItem = StringItemUtil.parseItemInCard(itemMeta);
+            ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(stringItem);
             for (ItemStackWrapper itemTypeWrapper : this.itemTypeList) {
                 if (ItemStackUtil.isItemSimilar(itemWrapper, itemTypeWrapper)) {
                     newType = false;

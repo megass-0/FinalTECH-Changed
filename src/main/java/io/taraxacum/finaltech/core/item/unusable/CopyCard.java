@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTechChanged;
 import io.taraxacum.finaltech.FinalTechChanged;
+import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -23,13 +24,19 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
- 
+
+import static io.taraxacum.libs.plugin.util.StringItemUtil.ITEM_KEY;
+
 public class CopyCard extends UnusableSlimefunItem implements RecipeItem, ValidItem {
     private final String itemLoreWithoutColor = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
     private final String itemLore = TextUtil.colorPseudorandomString(itemLoreWithoutColor, FinalTechChanged.getSeed());
+    private final Material type = getItem().getType();
+    private final String name = getItemName();
 
     public CopyCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -48,10 +55,28 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem, ValidI
             return false;
         }
 
+        if (itemStack.getType() != type) {
+            return false;
+        }
+
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = null;
         if (itemMeta != null) {
             lore = itemMeta.getLore();
+
+            PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+            String itemString = persistentDataContainer.get(ITEM_KEY, PersistentDataType.STRING);
+            if (itemString == null) {
+                return false;
+            }
+
+            if (!name.equals(ItemStackUtil.getItemName(itemStack))) {
+                return false;
+            }
+
+            if (!NullEnchantment.isPure(itemStack)) {
+                return false;
+            }
         }
         if (lore == null) {
             return false;
