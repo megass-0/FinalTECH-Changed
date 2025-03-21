@@ -69,7 +69,7 @@ public class MatrixItemSerializationConstructor extends AbstractOperationMachine
         this.locationList.add(location);
         BlockMenu blockMenu = BlockStorage.getInventory(block);
 
-        if (FinalTechChanged.getTps() < 19.5 && this.lastLocationList.size() > 1) {
+        if (FinalTechChanged.getTps() < 5.5 && this.lastLocationList.size() > 1) {
             if (BlockTickerUtil.hasSleep(config)) {
                 BlockTickerUtil.subSleep(config);
                 return;
